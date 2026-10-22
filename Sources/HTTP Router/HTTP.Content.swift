@@ -7,7 +7,7 @@ extension HTTP {
 
     public struct Content<Message: HTTP.Message.`Protocol`, Value: Coding>
     where
-        Value.Output: ~Copyable,
+        Value.Output: ~Copyable & Escapable,
         Message.Content: RangeReplaceableCollection,
         Value.Input == Message.Content.SubSequence,
         Value.Buffer == Message.Content
@@ -21,7 +21,7 @@ extension HTTP {
 }
 
 extension HTTP.Content: Parsing
-where Value.Output: ~Copyable {
+where Value.Output: ~Copyable & Escapable {
 
     public typealias Input = Message
 
@@ -49,7 +49,7 @@ where Value.Output: ~Copyable {
 }
 
 extension HTTP.Content: Serializing
-where Value.Output: ~Copyable {
+where Value.Output: ~Copyable & Escapable {
 
     public typealias Buffer = Message
 
@@ -65,4 +65,4 @@ where Value.Output: ~Copyable {
 }
 
 extension HTTP.Content: Coding
-where Value.Output: ~Copyable {}
+where Value.Output: ~Copyable & Escapable {}

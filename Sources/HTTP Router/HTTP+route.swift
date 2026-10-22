@@ -11,7 +11,7 @@ extension HTTP {
         _: Domain.Type,
         _ request: HTTP.Router.Request
     ) throws(HTTP.Router.Error) -> Domain.Router.Output
-    where Domain.Router.Output: ~Copyable {
+    where Domain.Router.Output: ~Copyable & Escapable {
         var input = request
         let route = try Domain.router.parse(&input)
         guard input.content == nil, input.target.remaining?.path.isEmpty ?? true else {
